@@ -1,7 +1,6 @@
 import wx #wx is a library which you need use Anaconda to do download it but i think it is a good GUI library
 import sqlite3 #it is used to link with the sqlite3 database,which we have already builded
 import loginPanel #state the login module
-import MySQLdb
 
 
 
@@ -29,7 +28,7 @@ class userDetailCollection(wx.Frame):
         self.text_dob = wx.TextCtrl(panel, pos=(100, 280), size=(235, 25), style=wx.TE_LEFT)
         self.bt_submit = wx.Button(panel, label='Submit', pos=(105, 320))
         self.bt_cancel = wx.Button(panel, label='Cancel', pos=(195, 320))
-        self.bt_resit = wx.Button(panel, label='Resit', pos=(285, 320))
+        self.bt_resit = wx.Button(panel, label='Reset', pos=(285, 320))
         self.bt_submit.Bind(wx.EVT_BUTTON, self.OnclickSubmit)
         self.bt_cancel.Bind(wx.EVT_BUTTON, self.OnclickCancel)
         self.bt_resit.Bind(wx.EVT_BUTTON, self.OnclickResit)
@@ -46,9 +45,7 @@ class userDetailCollection(wx.Frame):
         self.text_address.SetValue("")
 
     def OnclickSubmit(self, event):
-        db=MySQLdb.connect("localhost","root","771440059","studymysql")
-        Cursor=db.cursor()
-        conn = sqlite3.connect('F:\sqlitedb\studydb.db')  # connect database(this database i created in localhost in future can build a server to manage the database)
+        conn = sqlite3.connect('studydb.db')  # connect database(this database i created in localhost in future can build a server to manage the database)
         cursor = conn.cursor()  # Create a cursor, the cursor is a Class and have some function to contral the database
         username=self.text_username.GetValue()
         password=self.text_password.GetValue()

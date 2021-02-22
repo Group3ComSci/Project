@@ -3,8 +3,7 @@ import wx.adv
 import g1
 from ObjectListView import ObjectListView, ColumnDefn
 import sqlite3
-import MySQLdb
-conn = sqlite3.connect('F:\sqlitedb\studydb.db')
+conn = sqlite3.connect('studydb.db')
 cursor = conn.cursor()
 
 data=cursor.fetchone()

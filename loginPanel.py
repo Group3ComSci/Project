@@ -17,7 +17,7 @@ class MyFrame(wx.Frame):
         self.label_pwd = wx.StaticText(panel, label="Password:", pos=(35, 90))
         self.text_password = wx.TextCtrl(panel, pos=(100, 90), size=(235, 25), style=wx.TE_PASSWORD)
         self.bt_confirm = wx.Button(panel, label='Login', pos=(105, 130))
-        self.bt_resit = wx.Button(panel, label='resit', pos=(195, 130))
+        self.bt_resit = wx.Button(panel, label='Reset', pos=(195, 130))
         self.bt_register = wx.Button(panel, label='Register', pos=(285, 130))
 
         self.bt_confirm.Bind(wx.EVT_BUTTON, self.OnclickLogin)
@@ -26,7 +26,7 @@ class MyFrame(wx.Frame):
         self.Show()
 
     def OnclickLogin(self, event):
-        conn = sqlite3.connect('F:\sqlitedb\studydb.db')
+        conn = sqlite3.connect('studydb.db')
         cursor = conn.cursor()
         cursor.execute("SELECT user,password from user")
         message = ""
