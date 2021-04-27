@@ -1,7 +1,6 @@
 import wx #wx is a library which you need use Anaconda to do download it but i think it is a good GUI library
 import sqlite3 #it is used to link with the sqlite3 database,which we have already builded
 import loginPanel #state the login module
-import MySQLdb
 
 
 
@@ -21,12 +20,6 @@ class userDetailCollection(wx.Frame):
         self.check_gender = wx.ListBox(panel, -1, choices=list1, style=wx.LB_SINGLE, pos=(100, 90), size=(150, 50))
         self.label_age = wx.StaticText(panel, label="age:", pos=(50, 160))
         self.text_age = wx.TextCtrl(panel, pos=(100, 160), size=(235, 25), style=wx.TE_LEFT)
-        self.label_department = wx.StaticText(panel, label="department:", pos=(30, 200))
-        self.text_department = wx.TextCtrl(panel, pos=(100, 200), size=(235, 25), style=wx.TE_LEFT)
-        self.label_address = wx.StaticText(panel, label="address:", pos=(40, 240))
-        self.text_address = wx.TextCtrl(panel, pos=(100, 240), size=(235, 25), style=wx.TE_LEFT)
-        self.label_dob = wx.StaticText(panel, label="DOB:", pos=(50, 280))
-        self.text_dob = wx.TextCtrl(panel, pos=(100, 280), size=(235, 25), style=wx.TE_LEFT)
         self.bt_submit = wx.Button(panel, label='Submit', pos=(105, 320))
         self.bt_cancel = wx.Button(panel, label='Cancel', pos=(195, 320))
         self.bt_resit = wx.Button(panel, label='Resit', pos=(285, 320))
@@ -46,24 +39,19 @@ class userDetailCollection(wx.Frame):
         self.text_address.SetValue("")
 
     def OnclickSubmit(self, event):
-        db=MySQLdb.connect("localhost","root","771440059","studymysql")
-        Cursor=db.cursor()
-        conn = sqlite3.connect('F:\sqlitedb\studydb.db')  # connect database(this database i created in localhost in future can build a server to manage the database)
+        conn = sqlite3.connect('sqlite3.db')  # connect database(this database i created in localhost in future can build a server to manage the database)
         cursor = conn.cursor()  # Create a cursor, the cursor is a Class and have some function to contral the database
         username=self.text_username.GetValue()
         password=self.text_password.GetValue()
         name = self.text_Name.GetValue()
         gender = self.check_gender.GetStringSelection()
         age = int(self.text_age.GetValue())
-        department = self.text_department.GetValue()
-        address = self.text_address.GetValue()
-        dob = self.text_dob.GetValue()
-        if username == "" or password == "" or name=="" or gender=="" or age=="" or department=="" or address=="" or dob=="":
+        if username == "" or password == "" or name=="" or gender=="" or age=="" :
             message = "Can not process empty"
         else:
             try:
-                cursor.execute("INSERT INTO userDetail(userNum,Name,Gender,Age,department,Address,DOB) VALUES('%s','%s','%s','%d','%s','%s',%s);" % (username, name, gender, age, department, address, dob))
-                cursor.execute("INSERT INTO user(user,password) VALUES('%s','%s');" % (username, password))
+                cursor.execute("INSERT INTO LOGIN(ID,PASSWORD,AGE,manager,Name,GENDER) VALUES('%s','%s','%d',1,'%s','%s');"%(username,password,age,name,gender))
+                #cursor.execute("INSERT INTO user(user,password) VALUES('%s','%s');" % (username, password))
                # Cursor.execute("INSERT INTO login(userName,password) VALUES('%s',%s);"%(username,name))
                
             except:
@@ -75,7 +63,7 @@ class userDetailCollection(wx.Frame):
                 self.Close()
                 message = "successful"
                 loginPanel.reOpen()
-            wx.MessageBox(message)
+        wx.MessageBox(message)
 
 
 def open():

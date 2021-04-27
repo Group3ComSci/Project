@@ -4,6 +4,7 @@ import wx
 import mainPanel
 import g1
 global username1
+import wx.lib.agw.hyperlink as hl
 username1=''
 
 class MyFrame(wx.Frame):
@@ -17,18 +18,23 @@ class MyFrame(wx.Frame):
         self.label_pwd = wx.StaticText(panel, label="Password:", pos=(35, 90))
         self.text_password = wx.TextCtrl(panel, pos=(100, 90), size=(235, 25), style=wx.TE_PASSWORD)
         self.bt_confirm = wx.Button(panel, label='Login', pos=(105, 130))
+        self.bt_confirm.Disable()
         self.bt_resit = wx.Button(panel, label='resit', pos=(195, 130))
         self.bt_register = wx.Button(panel, label='Register', pos=(285, 130))
+        
+        self.checkBox = wx.CheckBox(panel, label = "Term and Conditions", pos= (100, 180))
+        self.hyperLink = hl.HyperLinkCtrl(panel, -1, "Click here for T&C", pos = (100, 200),URL= "https://docs.google.com/document/d/1EL2UgDwJe9DURok_cVCxnvkcQIvNyVtzB3oPTCI2C_0/edit?usp=sharing"  )
 
         self.bt_confirm.Bind(wx.EVT_BUTTON, self.OnclickLogin)
         self.bt_resit.Bind(wx.EVT_BUTTON, self.OnclickResit)
         self.bt_register.Bind(wx.EVT_BUTTON, self.OnclickRegister)
+        self.checkBox.Bind(wx.EVT_CHECKBOX, self.OneTickBoxClick)
         self.Show()
 
     def OnclickLogin(self, event):
-        conn = sqlite3.connect('F:\sqlitedb\studydb.db')
+        conn = sqlite3.connect('sqlite3.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT user,password from user")
+        cursor.execute("SELECT ID,PASSWORD from LOGIN")
         message = ""
         username = self.text_user.GetValue()
         
@@ -59,6 +65,13 @@ class MyFrame(wx.Frame):
     def OnclickRegister(self, event):
         self.Close()
         BasicalInfo.open()
+
+    def OneTickBoxClick(self, event):
+        if  self.checkBox.IsChecked() == True:
+            self.bt_confirm.Enable()
+        else:
+            self.bt_confirm.Disable()
+        self.Update()
 
 
 def reOpen():
