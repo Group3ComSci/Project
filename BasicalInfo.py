@@ -51,8 +51,7 @@ class userDetailCollection(wx.Frame):
         else:
             try:
                 cursor.execute("INSERT INTO LOGIN(ID,PASSWORD,AGE,manager,Name,GENDER) VALUES('%s','%s','%d',1,'%s','%s');"%(username,password,age,name,gender))
-                #cursor.execute("INSERT INTO user(user,password) VALUES('%s','%s');" % (username, password))
-               # Cursor.execute("INSERT INTO login(userName,password) VALUES('%s',%s);"%(username,name))
+
                
             except:
                 message = "error"

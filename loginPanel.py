@@ -57,6 +57,7 @@ class MyFrame(wx.Frame):
 
         wx.MessageBox(message)
         conn.close()
+        cursor.close()
 
     def OnclickResit(self, event):
         self.text_password.SetValue("")
